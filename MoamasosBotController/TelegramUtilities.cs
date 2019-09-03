@@ -14,7 +14,7 @@ namespace MoamasosBotController
     {
         private static TelegramBotClient MainBot = new TelegramBotClient(AppController.Config.TelegramKey)
         {
-            IsReceiving =false,              
+            IsReceiving = false,              
         };
 
         internal async static void SendExceptionAdmin(Exception ex)
