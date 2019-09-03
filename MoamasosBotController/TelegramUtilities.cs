@@ -14,7 +14,7 @@ namespace MoamasosBotController
     {
         private static TelegramBotClient MainBot = new TelegramBotClient(AppController.Config.TelegramKey)
         {
-            IsReceiving =false,              
+            IsReceiving = false,
         };
 
         internal async static void SendExceptionAdmin(Exception ex)
@@ -51,11 +51,7 @@ namespace MoamasosBotController
             var foto = e.Message.Photo.MinBy(m => m.FileSize).First();
             var id = foto.FileId;
 
-            if (string.IsNullOrEmpty(e?.Message?.Caption))
-            {
-                await MainBot.SendTextMessageAsync(e.Message.From.Id, "Para subir tu momaso, ingresa un nombre en el comentario de tu foto e intentalo de nuevo 😎");
-            }
-            else
+            if (await ValidacionesTelegram(e))
             {
                 var nombre = e.Message.Caption;
                 var path = $@"{AppController.Config.RutaDescargas}\{nombre}.{AppController.Config.Extension}";
@@ -64,8 +60,22 @@ namespace MoamasosBotController
                 var result = await CloudinaryApp.CloudController.UploadImageAsync(path);
                 //await MainBot.SendTextMessageAsync(e.Message.From.Id, "Tu momaso fue subido correctamnte :V ", disableNotification: true);
                 await MainBot.DeleteMessageAsync(e.Message.From.Id, e.Message.MessageId);
-            }
+            }                     
+        }
 
+        private static async Task<bool> ValidacionesTelegram(MessageEventArgs e)
+        {
+            if (string.IsNullOrEmpty(e?.Message?.Caption))
+            {
+                await MainBot.SendTextMessageAsync(e.Message.From.Id, "Para subir tu momaso, ingresa un nombre en el comentario de tu foto e intentalo de nuevo 😎");
+                return false;
+            }
+            if (e?.Message?.Caption?.Length > 60)
+            {
+                await MainBot.SendTextMessageAsync(e.Message.From.Id, $"Para subir tu momaso, no puedes exceder los 60 caracteres, caracteres actuales: {e.Message.Caption.Length} 😎");
+                return false;
+            }
+            return true;
         }
     }
 }
