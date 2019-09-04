@@ -65,7 +65,6 @@ namespace MoamasosBotController
         
         private static async Task<bool> ValidacionesTelegram(MessageEventArgs e)
         {
-            //comentario de prueba
             if (string.IsNullOrEmpty(e?.Message?.Caption))
             {
                 await MainBot.SendTextMessageAsync(e.Message.From.Id, "Para subir tu momaso, ingresa un nombre en el comentario de tu foto e intentalo de nuevo 😎");
