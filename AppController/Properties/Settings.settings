@@ -18,16 +18,19 @@
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="ThumbnailHeight" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">0</Value>
+      <Value Profile="(Default)">200</Value>
     </Setting>
     <Setting Name="ThumbnailWidth" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">0</Value>
+      <Value Profile="(Default)">250</Value>
     </Setting>
     <Setting Name="AdminId" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="Extension" Type="System.String" Scope="User">
       <Value Profile="(Default)">.jpg</Value>
+    </Setting>
+    <Setting Name="LimiteCaracteres" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">50</Value>
     </Setting>
   </Settings>
 </SettingsFile>

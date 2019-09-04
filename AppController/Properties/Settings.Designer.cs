@@ -85,7 +85,7 @@ namespace AppController.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        [global::System.Configuration.DefaultSettingValueAttribute("200")]
         public int ThumbnailHeight {
             get {
                 return ((int)(this["ThumbnailHeight"]));
@@ -97,7 +97,7 @@ namespace AppController.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        [global::System.Configuration.DefaultSettingValueAttribute("250")]
         public int ThumbnailWidth {
             get {
                 return ((int)(this["ThumbnailWidth"]));
@@ -128,6 +128,18 @@ namespace AppController.Properties {
             }
             set {
                 this["Extension"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("50")]
+        public int LimiteCaracteres {
+            get {
+                return ((int)(this["LimiteCaracteres"]));
+            }
+            set {
+                this["LimiteCaracteres"] = value;
             }
         }
     }

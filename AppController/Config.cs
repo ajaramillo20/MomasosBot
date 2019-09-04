@@ -58,6 +58,12 @@ namespace AppController
             set => Properties.Settings.Default.Extension = value;
         }
 
+        public static int LimiteCaracteres
+        {
+            get => Properties.Settings.Default.LimiteCaracteres;
+            set => Properties.Settings.Default.LimiteCaracteres = value;
+        }
+
         public static void Iniciar()
         {
             Properties.Settings.Default.PropertyChanged += Default_PropertyChanged;

@@ -70,9 +70,9 @@ namespace MoamasosBotController
                 await MainBot.SendTextMessageAsync(e.Message.From.Id, "Para subir tu momaso, ingresa un nombre en el comentario de tu foto e intentalo de nuevo 😎");
                 return false;
             }
-            if (e?.Message?.Caption?.Length > 60)
+            if (e?.Message?.Caption?.Length > AppController.Config.LimiteCaracteres)
             {
-                await MainBot.SendTextMessageAsync(e.Message.From.Id, $"Para subir tu momaso, no puedes exceder los 60 caracteres, caracteres actuales: {e.Message.Caption.Length} 😎");
+                await MainBot.SendTextMessageAsync(e.Message.From.Id, $"Para subir tu momaso, no puedes exceder los {AppController.Config.LimiteCaracteres} caracteres, caracteres actuales: {e.Message.Caption.Length} 😎");
                 return false;
             }
             return true;

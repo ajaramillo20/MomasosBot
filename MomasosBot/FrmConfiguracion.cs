@@ -34,6 +34,7 @@ namespace MomasosBot
             AppController.Config.ThumbnailWidth = int.Parse(_txtWidth.Text);
             AppController.Config.AdminId = _txtAdminId.Text;
             AppController.Config.Extension = _txtExtension.Text;
+            AppController.Config.LimiteCaracteres = (int)_txtLimiteCaracteres.Value;
             GetConfiguracion();
         }
 
@@ -48,6 +49,7 @@ namespace MomasosBot
             _txtWidth.Text = AppController.Config.ThumbnailWidth.ToString();
             _txtAdminId.Text = AppController.Config.AdminId;
             _txtExtension.Text = AppController.Config.Extension;
+            _txtLimiteCaracteres.Value = AppController.Config.LimiteCaracteres;
         }
 
         private void _btnSeleccionaRuta_Click(object sender, EventArgs e)
