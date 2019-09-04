@@ -25,7 +25,7 @@ namespace MoamasosBotController
             }
             catch (Exception)
             {
-                               
+                //ignored                
             }
         }
 
