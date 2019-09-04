@@ -62,7 +62,7 @@ namespace MoamasosBotController
                 await MainBot.DeleteMessageAsync(e.Message.From.Id, e.Message.MessageId);
             }                     
         }
-
+        
         private static async Task<bool> ValidacionesTelegram(MessageEventArgs e)
         {
             if (string.IsNullOrEmpty(e?.Message?.Caption))
