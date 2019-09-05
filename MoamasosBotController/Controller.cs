@@ -28,43 +28,14 @@ namespace MomasosBotController
         private static void IniciarEventos()
         {
             MainBot.OnMessage += MainBot_OnMessage;
-            MainBot.OnInlineQuery += MainBot_OnInlineQuery;
-            MainBot.OnReceiveGeneralError += MainBot_OnReceiveGeneralError;
-        }
-
-        private static void MainBot_OnReceiveGeneralError(object sender, ReceiveGeneralErrorEventArgs e)
-        {
-
-        }
+            MainBot.OnInlineQuery += MainBot_OnInlineQuery;            
+        }       
 
         private async static void MainBot_OnInlineQuery(object sender, Telegram.Bot.Args.InlineQueryEventArgs e)
         {
             try
             {
-                await AnswerInlineQueryPagination(e);
-                #region old
-                //if (e.InlineQuery.Query=="/" || e.InlineQuery.Query=="//")
-                //{
-                //    AnswerInlineQueryPagination(e);
-                //    return;
-                //}
-
-                //var query = e.InlineQuery.Query;
-                //var result = CloudinaryApp.Controller.GetImagesByQuery(query);
-
-                //InlineQueryResultPhoto[] MomosResult = new InlineQueryResultPhoto[result.Count];
-
-                //foreach (var file in result)
-                //{
-                //    var nombre = file.PublicId;
-                //    int index = result.IndexOf(file);
-
-
-                //    MomosResult[index] = new InlineQueryResultPhoto(file.PublicId, file.Uri.AbsoluteUri, file.Uri.AbsoluteUri);
-                //    MomosResult[index].Title = file.PublicId;
-                //}
-                //await MainBot.AnswerInlineQueryAsync(e.InlineQuery.Id, MomosResult);
-                #endregion
+                await AnswerInlineQueryPagination(e);                
             }
             catch (Exception)
             {
