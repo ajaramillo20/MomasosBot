@@ -67,14 +67,14 @@ namespace MomasosBotController
                 #endregion
             }
             catch (Exception)
-            { 
+            {
                 //ignored               
             }
         }
 
         private static Task AnswerInlineQueryPagination(InlineQueryEventArgs e)
         {
-            return Task.Run(async() =>
+            return Task.Run(async () =>
             {
                 var resultsPerRequest = 50;
 
@@ -86,23 +86,22 @@ namespace MomasosBotController
 
                 var resultsToSend = new List<InlineQueryResultPhoto>();
 
-                results.Skip(int.Parse(offset)).Take(resultsPerRequest).ToList().ForEach(result => {
-                    resultsToSend.Add(
-                        new InlineQueryResultPhoto(result.PublicId, result.Uri.AbsoluteUri, result.Uri.AbsoluteUri)
-                        );
+                results.Skip(int.Parse(offset)).Take(resultsPerRequest).ToList().ForEach(result =>
+                {
+                    resultsToSend.Add(new InlineQueryResultPhoto(result.PublicId, result.Uri.AbsoluteUri, result.Uri.AbsoluteUri));
                 });
 
                 var nextOffset = int.Parse(offset) + resultsPerRequest > results.Count ? "" : (offset + resultsPerRequest).ToString();
 
                 await MainBot.AnswerInlineQueryAsync(e.InlineQuery.Id, resultsToSend.ToArray(), null, false, nextOffset);
             });
-            
+
         }
 
         private async static void MainBot_OnMessage(object sender, Telegram.Bot.Args.MessageEventArgs e)
         {
             try
-            {                
+            {
                 switch (e.Message.Type)
                 {
                     case Telegram.Bot.Types.Enums.MessageType.Photo:
@@ -116,6 +115,6 @@ namespace MomasosBotController
             }
         }
 
-        
+
     }
 }

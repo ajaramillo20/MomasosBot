@@ -48,23 +48,20 @@ namespace MoamasosBotController
 
         internal static async Task UploadMomasoFromTelegram(MessageEventArgs e)
         {
-            var foto = e.Message.Photo.MinBy(m => m.FileSize).First();
-            var id = foto.FileId;
-
+            var IdFoto = e.Message.Photo.MinBy(m => m.FileSize).First().FileId;
+            
             if (await ValidacionesTelegram(e))
             {
                 var nombre = e.Message.Caption;
                 var path = $@"{AppController.Config.RutaDescargas}\{nombre}.{AppController.Config.Extension}";
-                await DownloadTelegramFile(id, path);
-                //await AppController.Utilities.ResizeImage(path);
-                var result = await CloudinaryApp.CloudController.UploadImageAsync(path);
-                //await MainBot.SendTextMessageAsync(e.Message.From.Id, "Tu momaso fue subido correctamnte :V ", disableNotification: true);
+                await DownloadTelegramFile(IdFoto, path);                
+                var result = await CloudinaryApp.CloudController.UploadImageAsync(path);                
                 await MainBot.DeleteMessageAsync(e.Message.From.Id, e.Message.MessageId);
             }                     
         }
         
         private static async Task<bool> ValidacionesTelegram(MessageEventArgs e)
-        {
+        {            
             if (string.IsNullOrEmpty(e?.Message?.Caption))
             {
                 await MainBot.SendTextMessageAsync(e.Message.From.Id, "Para subir tu momaso, ingresa un nombre en el comentario de tu foto e intentalo de nuevo 😎");

@@ -51,16 +51,7 @@ namespace CloudinaryApp
         //}
 
         public static List<Resource> GetImagesByQuery(string query)
-        {
-            //if (query=="/" || query =="//")
-            //{
-            //    var param = new ListResourcesParams();
-            //    param.MaxResults = 1000;                
-            //    return Api.ListResources(param).Resources.ToList();
-            //}
-            //else
-            //{
-            //string expression = string.IsNullOrEmpty(query)?"":$"public_id LIKE {query}";
+        {            
             string expression = string.IsNullOrEmpty(query) ? "" : $"public_id LIKE {query}";
             List<SearchResource> result = Api.Search().Expression(expression).MaxResults(5000).Execute().Resources.ToList();
             var publicIds = new List<string>();
