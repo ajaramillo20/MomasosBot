@@ -56,10 +56,15 @@ namespace MomasosBot
         {
             var fd = new FolderBrowserDialog();
 
-            if (fd.ShowDialog()==DialogResult.OK)
+            if (fd.ShowDialog() == DialogResult.OK)
             {
                 _txtRutaDescargas.Text = fd.SelectedPath;
             }
+        }
+
+        private void _btnReiniciar_Click(object sender, EventArgs e)
+        {
+            Application.Restart();
         }
     }
 

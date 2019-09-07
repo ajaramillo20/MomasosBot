@@ -29,13 +29,13 @@ namespace MomasosBotController
         {
             MainBot.OnMessage += MainBot_OnMessage;
             MainBot.OnInlineQuery += MainBot_OnInlineQuery;            
-        }       
+        }
 
-        private async static void MainBot_OnInlineQuery(object sender, Telegram.Bot.Args.InlineQueryEventArgs e)
+        private async static void MainBot_OnInlineQuery(object sender, InlineQueryEventArgs e)
         {
             try
             {
-                await AnswerInlineQueryPagination(e);                
+                await AnswerInlineQueryPagination(e);
             }
             catch (Exception)
             {
@@ -48,13 +48,8 @@ namespace MomasosBotController
             return Task.Run(async () =>
             {
                 var resultsPerRequest = 50;
-
                 List<CloudinaryDotNet.Actions.Resource> results = CloudinaryApp.CloudController.GetImagesByQuery(e.InlineQuery.Query);
-
-                var offset = string.IsNullOrEmpty(e.InlineQuery.Offset) ? "0" : e.InlineQuery.Offset;
-
-                //int.Parse(e.InlineQuery.Offset ?? "0");
-
+                var offset = string.IsNullOrEmpty(e.InlineQuery.Offset) ? "0" : e.InlineQuery.Offset;                
                 var resultsToSend = new List<InlineQueryResultPhoto>();
 
                 results.Skip(int.Parse(offset)).Take(resultsPerRequest).ToList().ForEach(result =>

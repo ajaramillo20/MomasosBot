@@ -50,6 +50,7 @@
             this.metroLabel2 = new MetroFramework.Controls.MetroLabel();
             this._txtTelegramKey = new MetroFramework.Controls.MetroTextBox();
             this.metroLabel1 = new MetroFramework.Controls.MetroLabel();
+            this._btnReiniciar = new MetroFramework.Controls.MetroButton();
             ((System.ComponentModel.ISupportInitialize)(this._txtLimiteCaracteres)).BeginInit();
             this.SuspendLayout();
             // 
@@ -502,11 +503,24 @@
             this.metroLabel1.Text = "Telegram Key:";
             this.metroLabel1.Theme = MetroFramework.MetroThemeStyle.Dark;
             // 
+            // _btnReiniciar
+            // 
+            this._btnReiniciar.Location = new System.Drawing.Point(454, 20);
+            this._btnReiniciar.Name = "_btnReiniciar";
+            this._btnReiniciar.Size = new System.Drawing.Size(27, 23);
+            this._btnReiniciar.Style = MetroFramework.MetroColorStyle.White;
+            this._btnReiniciar.TabIndex = 50;
+            this._btnReiniciar.Text = "🔄";
+            this._btnReiniciar.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this._btnReiniciar.UseSelectable = true;
+            this._btnReiniciar.Click += new System.EventHandler(this._btnReiniciar_Click);
+            // 
             // FrmConfiguracion
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(502, 470);
+            this.Controls.Add(this._btnReiniciar);
             this.Controls.Add(this._txtLimiteCaracteres);
             this.Controls.Add(this.metroLabel10);
             this.Controls.Add(this.metroLabel9);
@@ -564,5 +578,6 @@
         private MetroFramework.Controls.MetroLabel metroLabel2;
         private MetroFramework.Controls.MetroTextBox _txtTelegramKey;
         private MetroFramework.Controls.MetroLabel metroLabel1;
+        private MetroFramework.Controls.MetroButton _btnReiniciar;
     }
 }

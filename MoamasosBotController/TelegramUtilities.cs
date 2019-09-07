@@ -15,8 +15,9 @@ namespace MoamasosBotController
         private static TelegramBotClient MainBot = new TelegramBotClient(AppController.Config.TelegramKey)
         {
             IsReceiving = false,
+            
         };
-
+       
         internal async static void SendExceptionAdmin(Exception ex)
         {
             try
@@ -28,7 +29,7 @@ namespace MoamasosBotController
                 //ignored                
             }
         }
-
+        
         internal static async Task DownloadTelegramFile(string fileId, string path)
         {
             try
