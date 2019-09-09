@@ -49,13 +49,13 @@ namespace MoamasosBotController
 
         internal static async Task UploadMomasoFromTelegram(MessageEventArgs e)
         {
-            var IdFoto = e.Message.Photo.MinBy(m => m.FileSize).First().FileId;
+            var idfoto = e.Message.Photo.MinBy(m => m.FileSize).First().FileId;
             
             if (await ValidacionesTelegram(e))
             {
                 var nombre = e.Message.Caption;
                 var path = $@"{AppController.Config.RutaDescargas}\{nombre}.{AppController.Config.Extension}";
-                await DownloadTelegramFile(IdFoto, path);                
+                await DownloadTelegramFile(idfoto, path);                  
                 var result = await CloudinaryApp.CloudController.UploadImageAsync(path);                
                 await MainBot.DeleteMessageAsync(e.Message.From.Id, e.Message.MessageId);
             }                     

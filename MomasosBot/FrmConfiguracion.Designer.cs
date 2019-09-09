@@ -411,6 +411,7 @@
             this._btnGuardar.Text = "Guardar";
             this._btnGuardar.Theme = MetroFramework.MetroThemeStyle.Dark;
             this._btnGuardar.UseSelectable = true;
+            this._btnGuardar.Click += new System.EventHandler(this._btnGuardar_Click_1);
             // 
             // _txtRutaDescargas
             // 

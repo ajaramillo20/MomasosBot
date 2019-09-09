@@ -60,7 +60,6 @@ namespace CloudinaryApp
                 publicIds.Add(r.PublicId);
 
             var resultado = Api.ListResourceByPublicIds(publicIds, false, false, false).Resources.ToList();
-
             return resultado;
         }
 

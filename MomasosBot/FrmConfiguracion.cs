@@ -66,6 +66,11 @@ namespace MomasosBot
         {
             Application.Restart();
         }
+
+        private void _btnGuardar_Click_1(object sender, EventArgs e)
+        {
+
+        }
     }
 
 }

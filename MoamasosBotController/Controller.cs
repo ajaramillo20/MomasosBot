@@ -61,7 +61,6 @@ namespace MomasosBotController
 
                 await MainBot.AnswerInlineQueryAsync(e.InlineQuery.Id, resultsToSend.ToArray(), null, false, nextOffset);
             });
-
         }
 
         private async static void MainBot_OnMessage(object sender, Telegram.Bot.Args.MessageEventArgs e)
