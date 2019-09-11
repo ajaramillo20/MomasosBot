@@ -16,14 +16,19 @@ namespace CloudinaryApp
 {
     public static class CloudController
     {
-        private static Cloudinary Api = new Cloudinary
-        (
-            new Account(
-                        AppController.Config.Cloud,
-                        AppController.Config.ApiKey,
-                        AppController.Config.ApiSecret
-                        )
-         );
+        private static Cloudinary Api;
+
+        public static void Iniciar(string cloud, string apiKey, string apiSecert)
+        {
+            var account = new Account()
+            {
+                Cloud = cloud,
+                ApiKey = apiKey,
+                ApiSecret = apiSecert
+            };
+
+            Api = new Cloudinary(account);
+        }
 
         public async static Task<ImageUploadResult> UploadImageAsync(string path)
         {
@@ -34,7 +39,7 @@ namespace CloudinaryApp
                 File = new FileDescription(path),
                 PublicId = nombreArchivo,
                 UseFilename = true,
-                Tags = "momos"
+                Tags = "momasosBot"                
             };
 
             var para = new RawUploadParams();
@@ -51,7 +56,7 @@ namespace CloudinaryApp
         //}
 
         public static List<Resource> GetImagesByQuery(string query)
-        {            
+        {
             string expression = string.IsNullOrEmpty(query) ? "" : $"public_id LIKE {query}";
             List<SearchResource> result = Api.Search().Expression(expression).MaxResults(5000).Execute().Resources.ToList();
             var publicIds = new List<string>();

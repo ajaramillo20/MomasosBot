@@ -106,6 +106,10 @@
       <Project>{8daa2f3a-9232-459d-ad6b-8b62761dc770}</Project>
       <Name>AppController</Name>
     </ProjectReference>
+    <ProjectReference Include="..\CloudinaryApp\CloudinaryApp.csproj">
+      <Project>{bccde2f9-288f-464d-88be-850cd7f6d258}</Project>
+      <Name>CloudinaryApp</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MoamasosBotController\MomasosBotController.csproj">
       <Project>{3c587548-8444-43b3-bf53-46d16f0ac4d8}</Project>
       <Name>MomasosBotController</Name>

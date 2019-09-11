@@ -24,6 +24,12 @@ namespace MomasosBot
         {
             MomasosBotController.Controller.Iniciar();
             AppController.Config.Iniciar();
+            CloudinaryApp.CloudController.Iniciar
+            (
+                cloud: AppController.Config.Cloud,
+                apiKey: AppController.Config.ApiKey,
+                apiSecert: AppController.Config.ApiSecret
+            );
         }
     }
 }

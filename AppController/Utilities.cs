@@ -11,12 +11,12 @@ namespace AppController
 {
     public class Utilities
     {
-        public static Task ResizeImage(string path, int width = 250, int height = 200)
+        public static Task<string> ResizeImage(string path, int width = 250, int height = 200)
         {
             return Task.Run(() =>
             {
                 var tempPath = Path.GetTempFileName();
-                Bitmap newImage;
+                Bitmap newImage;                
 
                 using (var srcImage = Image.FromFile(path))
                 {
@@ -28,9 +28,10 @@ namespace AppController
                         graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
                         graphics.DrawImage(srcImage, new Rectangle(0, 0, width, height));                                                
                         newImage.Save(tempPath);
-                        //newImage.Save(path);
+                        newImage.Save(tempPath);
                     }
                 }
+                return tempPath;
             });
 
         }
