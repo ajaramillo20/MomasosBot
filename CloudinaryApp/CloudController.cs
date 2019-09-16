@@ -39,7 +39,7 @@ namespace CloudinaryApp
                 File = new FileDescription(path),
                 PublicId = nombreArchivo,
                 UseFilename = true,
-                Tags = "momasosBot"                
+                Tags = "momasosBot"
             };
 
             var para = new RawUploadParams();
@@ -55,17 +55,60 @@ namespace CloudinaryApp
         //    return url;
         //}
 
-        public static List<Resource> GetImagesByQuery(string query)
+
+        public static List<Resource> GetImagesByQueryAsync(string query, string nextCursor)
         {
             string expression = string.IsNullOrEmpty(query) ? "" : $"public_id LIKE {query}";
-            List<SearchResource> result = Api.Search().Expression(expression).MaxResults(5000).Execute().Resources.ToList();
-            var publicIds = new List<string>();
 
-            foreach (var r in result)
-                publicIds.Add(r.PublicId);
+            if (string.IsNullOrEmpty(expression))
+            {
+                var parametros = new ListResourcesParams();
+                parametros.MaxResults = 5000;
+                return Api.ListResources(parametros).Resources.ToList();
+            }
+            else
+            {
+                List<SearchResource> busqueda = Api.Search().Expression(expression).MaxResults(5000).Execute().Resources.ToList();
+                var publicIds = new List<string>();
 
-            var resultado = Api.ListResourceByPublicIds(publicIds, false, false, false).Resources.ToList();
-            return resultado;
+                foreach (var r in busqueda)
+                {
+                    publicIds.Add(r.PublicId);
+                }
+
+                var resultado = Api.ListResourceByPublicIds(publicIds, false, false, false).Resources.ToList();
+                return resultado;
+            }
+        }
+
+        public static List<Resource> GetImagesByQuery(string query)
+        {
+
+            string expression = string.IsNullOrEmpty(query) ? "" : $"public_id LIKE {query}";
+
+            if (string.IsNullOrEmpty(expression))
+            {
+                var listResourcesParams = new ListResourcesParams()
+                {
+                    Type = "upload",
+                    MaxResults = 5000
+                };
+                var listResourcesResult = Api.ListResources(listResourcesParams).Resources.ToList();
+                return listResourcesResult;
+            }
+            else
+            {
+                List<SearchResource> result = Api.Search().Expression(expression).MaxResults(5000).Execute().Resources.ToList();
+                var publicIds = new List<string>();
+
+                foreach (var r in result)
+                {
+                    publicIds.Add(r.PublicId);
+                }
+
+                var resultado = Api.ListResourceByPublicIds(publicIds, false, false, false).Resources.ToList();
+                return resultado;
+            }
         }
 
         public static void GetImagesByTag(string tag)

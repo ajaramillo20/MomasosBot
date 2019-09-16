@@ -37,7 +37,7 @@ namespace MomasosBotController
             {
                 await AnswerInlineQueryPagination(e);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 //ignored               
             }
@@ -48,16 +48,18 @@ namespace MomasosBotController
             return Task.Run(async () =>
             {
                 var resultsPerRequest = 50;
-                List<CloudinaryDotNet.Actions.Resource> results = CloudinaryApp.CloudController.GetImagesByQuery(e.InlineQuery.Query);
+                List<CloudinaryDotNet.Actions.Resource> results = CloudinaryApp.CloudController.GetImagesByQueryAsync(e.InlineQuery.Query,"");
                 var offset = string.IsNullOrEmpty(e.InlineQuery.Offset) ? "0" : e.InlineQuery.Offset;                
                 var resultsToSend = new List<InlineQueryResultPhoto>();
 
+                var nextOffset = int.Parse(offset) + resultsPerRequest > results.Count ? "" : (offset + resultsPerRequest).ToString();
+                //CloudinaryApp.CloudController.GetImagesByQueryAsync("", offset, nextOffset);
                 results.Skip(int.Parse(offset)).Take(resultsPerRequest).ToList().ForEach(result =>
                 {
                     resultsToSend.Add(new InlineQueryResultPhoto(result.PublicId, result.Uri.AbsoluteUri, result.Uri.AbsoluteUri));
                 });
 
-                var nextOffset = int.Parse(offset) + resultsPerRequest > results.Count ? "" : (offset + resultsPerRequest).ToString();
+                
 
                 await MainBot.AnswerInlineQueryAsync(e.InlineQuery.Id, resultsToSend.ToArray(), null, false, nextOffset);
             });
