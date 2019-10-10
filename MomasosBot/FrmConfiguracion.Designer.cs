@@ -546,7 +546,7 @@
             this.Controls.Add(this.metroLabel1);
             this.Name = "FrmConfiguracion";
             this.Style = MetroFramework.MetroColorStyle.Silver;
-            this.Text = "Configuración";
+            this.Text = "┤";
             this.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.Load += new System.EventHandler(this.FrmConfiguracion_Load);
             ((System.ComponentModel.ISupportInitialize)(this._txtLimiteCaracteres)).EndInit();

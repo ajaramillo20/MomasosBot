@@ -19,15 +19,13 @@ namespace CloudinaryApp
         private static Cloudinary Api;
 
         public static void Iniciar(string cloud, string apiKey, string apiSecert)
-        {
-            var account = new Account()
+        {            
+            Api = new Cloudinary(new Account()
             {
                 Cloud = cloud,
                 ApiKey = apiKey,
                 ApiSecret = apiSecert
-            };
-
-            Api = new Cloudinary(account);
+            });
         }
 
         public async static Task<ImageUploadResult> UploadImageAsync(string path)
@@ -47,72 +45,58 @@ namespace CloudinaryApp
             return await Api.UploadAsync(uploadParams);
         }
 
-        //public static string GetThumbnailAsync(string publicId, int height = 100, int width = 150)
-        //{
-        //    //var transformation = new Transformation().Height(height).Width(width).Crop("limit");
-        //    //var url =Api.Api.UrlImgUp.Transform(transformation).BuildImageTag($"{publicId}.jpg");
-        //    var url = $"http://res.cloudinary.com/momasosbot/image/upload/t_media_lib_thumb/{publicId}.jpg";
-        //    return url;
-        //}
-
-
-        public static List<Resource> GetImagesByQueryAsync(string query, string nextCursor)
+        public static string GetThumbnailAsync(string publicId, int height = 100, int width = 150)
         {
-            string expression = string.IsNullOrEmpty(query) ? "" : $"public_id LIKE {query}";
+            var url = $"http://res.cloudinary.com/momasosbot/image/upload/t_media_lib_thumb/{publicId}.jpg";
+            return url;
+        }
+       
+        public static List<string> GetImagesIdByQuery(string query)
+        {
+            string expression = string.IsNullOrEmpty(query) || query == "//" ? "" : $"public_id LIKE {query}";
+            List<SearchResource> result = Api.Search().Expression(expression).MaxResults(5000).Execute().Resources.ToList();
+            var publicIds = new List<string>();
 
-            if (string.IsNullOrEmpty(expression))
-            {
-                var parametros = new ListResourcesParams();
-                parametros.MaxResults = 5000;
-                return Api.ListResources(parametros).Resources.ToList();
-            }
-            else
-            {
-                List<SearchResource> busqueda = Api.Search().Expression(expression).MaxResults(5000).Execute().Resources.ToList();
-                var publicIds = new List<string>();
+            result.ForEach(r => { publicIds.Add(r.PublicId); });
 
-                foreach (var r in busqueda)
-                {
-                    publicIds.Add(r.PublicId);
-                }
-
-                var resultado = Api.ListResourceByPublicIds(publicIds, false, false, false).Resources.ToList();
-                return resultado;
-            }
+            return publicIds;
         }
 
-        public static List<Resource> GetImagesByQuery(string query)
+        public static async Task<List<string>> GetImagesIdByQueryAsync(string query)
         {
-
-            string expression = string.IsNullOrEmpty(query) ? "" : $"public_id LIKE {query}";
-
-            if (string.IsNullOrEmpty(expression))
+            return await Task.Run(() => 
             {
-                var listResourcesParams = new ListResourcesParams()
-                {
-                    Type = "upload",
-                    MaxResults = 5000
-                };
-                var listResourcesResult = Api.ListResources(listResourcesParams).Resources.ToList();
-                return listResourcesResult;
-            }
-            else
-            {
+                string expression = string.IsNullOrEmpty(query) || query == "//" ? "" : $"public_id LIKE {query}";
                 List<SearchResource> result = Api.Search().Expression(expression).MaxResults(5000).Execute().Resources.ToList();
                 var publicIds = new List<string>();
 
-                foreach (var r in result)
-                {
-                    publicIds.Add(r.PublicId);
-                }
+                result.ForEach(r => { publicIds.Add(r.PublicId); });
 
-                var resultado = Api.ListResourceByPublicIds(publicIds, false, false, false).Resources.ToList();
-                return resultado;
-            }
+                return publicIds;
+            });            
         }
 
-        public static void GetImagesByTag(string tag)
+        public static List<Resource> GetImagesByPublicIds(List<string> publicIds)
         {
+            List<Resource> result = new List<Resource>();
+            result = Api.ListResourceByPublicIds(publicIds, false, false, false).Resources.ToList();            
+            return result;
         }
+
+        public static async Task<List<Resource>> GetImagesByPublicIdsAsync(List<string> publicIds)
+        {
+            return await Task.Run(() =>
+            {
+                List<Resource> result = new List<Resource>();
+                result = Api.ListResourceByPublicIds(publicIds, false, false, false).Resources.ToList();
+                return result;
+            });            
+        }
+        
+        public static GetResourceResult GetImagesByPublicId(string publicId)
+        {
+            var result = Api.GetResource(publicId);
+            return result;
+        }        
     }
 }

@@ -11,6 +11,17 @@ namespace AppController
 {
     public class Utilities
     {
+        public static string GetTempPath()
+        {
+            var TempPath = Path.GetTempPath();
+            return TempPath;            
+        }
+
+        public static string GetTempFile()
+        {
+            return Path.GetTempFileName();
+        }
+
         public static Task<string> ResizeImage(string path, int width = 250, int height = 200)
         {
             return Task.Run(() =>
@@ -33,7 +44,6 @@ namespace AppController
                 }
                 return tempPath;
             });
-
         }
     }
 }

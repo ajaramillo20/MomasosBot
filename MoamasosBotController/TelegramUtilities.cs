@@ -22,7 +22,7 @@ namespace MoamasosBotController
         {
             try
             {
-                await MainBot.SendTextMessageAsync(AppController.Config.AdminId, $"ERROR\nMensaje: {ex.Message}\nObjeto: {ex.Source}\nMetodo: {ex.TargetSite}");
+                await MainBot.SendTextMessageAsync(AppController.Config.AdminId, $"ERROR\nMensaje: {ex.Message}\nObjeto: {ex.Source}\nMetodo: {ex.TargetSite}",disableNotification:true);
             }
             catch (Exception)
             {
@@ -52,7 +52,7 @@ namespace MoamasosBotController
             var idfoto = e.Message.Photo.MinBy(m => m.FileSize).First().FileId;
             
             if (await ValidacionesTelegram(e))
-            {
+            {                
                 var nombre = e.Message.Caption;
                 var path = $@"{AppController.Config.RutaDescargas}\{nombre}.{AppController.Config.Extension}";
                 await DownloadTelegramFile(idfoto, path);                  
@@ -65,12 +65,12 @@ namespace MoamasosBotController
         {            
             if (string.IsNullOrEmpty(e?.Message?.Caption))
             {
-                await MainBot.SendTextMessageAsync(e.Message.From.Id, "Para subir tu momaso, ingresa un nombre en el comentario de tu foto e intentalo de nuevo 😎");
+                await MainBot.SendTextMessageAsync(e.Message.From.Id, "Para subir tu momaso, ingresa un nombre en el comentario de tu foto e inténtalo de nuevo 😎");
                 return false;
             }
             if (e?.Message?.Caption?.Length > AppController.Config.LimiteCaracteres)
             {
-                await MainBot.SendTextMessageAsync(e.Message.From.Id, $"Para subir tu momaso, no puedes exceder los {AppController.Config.LimiteCaracteres} caracteres, caracteres actuales: {e.Message.Caption.Length} 😎");
+                await MainBot.SendTextMessageAsync(e.Message.From.Id, $"Para subir tu momaso, no puedes exceder los {AppController.Config.LimiteCaracteres} caracteres. Caracteres actuales: {e.Message.Caption.Length} 😎");
                 return false;
             }
             return true;
